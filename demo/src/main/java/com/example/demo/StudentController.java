@@ -1,16 +1,16 @@
 package com.example.demo;
 
 // 브라우저의 Get 방식 요청을 특정 메서드와 연결하기 위함
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
+// 브라우저나 클라이언트의 PUT 방식 요청을 특정 메서드와 연결하기 위함
+// 기존 데이터를 삭제하는 DELETE 요청을 특정 메서드와 연결하기 위함
 // 클래스의 웹 요청 Controller 임을 Spring Boot에 전달
-import org.springframework.web.bind.annotation.RestController;
 // 객체 여러 개를 List로 반환
 import java.lang.reflect.Array;
 import java.util.List;
 import java.util.ArrayList;
-import org.springframework.web.bind.annotation.RequestParam;
 // URL 주소에 포함된 값을 Java로 가져오는 기능
-import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController // 웹 요청을 처리하고 결과를 브라우저에 직접 반환하는 Controller
 public class StudentController { // 학생 관련 웹 요청 처리 클래스
@@ -33,7 +33,11 @@ public class StudentController { // 학생 관련 웹 요청 처리 클래스
     }
 
     @GetMapping("/students")
-    public List<Student> getStudentList(){
+    public List<Student> students(){
+        return studentList;
+    }
+
+    private List<Student> getStudentList(){
         return studentList;
     }
 
@@ -75,9 +79,66 @@ public class StudentController { // 학생 관련 웹 요청 처리 클래스
         return getStudentList().get(id - 1).getName();
     }
 
+    @GetMapping("/students/search/name")
+    public Object searchByName(@RequestParam String name){
+        for(Student student: studentList){
+            if(student.getName().equals(name)){
+                return student;
+            }
+        }
+        return "해당 이름의 학생이 없습니다.";
+    }
+
     @GetMapping("/students/search")
     // "http://localhost:8080/students/search?department=멀티미디어학과"의 형식
     public List<Student> searchByDepartment(@RequestParam String department){
         return getStudentList().stream().filter(s->s.getDepartment().equals(department)).toList();
+    }
+
+    @PutMapping("/students/search/{id}")
+    public Object updateStudent(
+            @PathVariable int id,
+            @RequestParam String name,
+            @RequestParam String department
+    ){
+        for(Student student : studentList){
+            if(student.getID() == id){
+                student.setName(name);
+                student.setDepartment(department);
+
+                return student;
+            }
+        }
+        return "해당 학생이 없습니다.";
+    }
+
+    @DeleteMapping("/students/{id}")
+    public String deleteStudent(@PathVariable int id){
+        for(Student student : studentList){
+            if(student.getID() == id){
+                studentList.remove(student);
+                return "학생이 삭제되었습니다.";
+            }
+        }
+        return "해당 학생이 없습니다";
+    }
+
+    @PostMapping("/students/new")
+    public Object postStudent(
+            // ?이후에 값을 쌍으로 id=10의 식으로 받으려면 RequestParam의 형식을 이용해야 함
+            @RequestParam int id,
+            @RequestParam String name,
+            @RequestParam String department
+    ){
+        for(Student student : studentList){
+            if(student.getID() == id){
+                return "이미 존재하는 학생번호입니다.";
+            }
+        }
+        Student newStudent = new Student(id, name, department);
+
+        studentList.add(newStudent);
+
+        return "학생을 추가했습니다.";
     }
 }

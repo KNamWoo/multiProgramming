@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>학생 관리 시스템</title>
+    <link rel="stylesheet" href="./css/students.css">
+</head>
+<body>
+    <h1>학생 관리 시스템</h1>
+    <hr>
+    <h2>학생 정보 입력</h2>
+    <div class="input-box">
+        학생번호 :
+        <input type="number" id="id" placeholder="학생번호 입력">
+        <br>
+        이름 :
+        <input type="text" id="name" placeholder="이름 입력">
+        <br>
+        학과 :
+        <input type="text" id="department" placeholder="학과 입력">
+    </div>
+    <hr>
+    <h2>학생 조회</h2>
+    <button onclick="getAllStudents()">전체보기</button>
+    <button onclick="getStudentByID()">ID로 검색</button>
+    <button onclick="getStudentByName()">이름으로 검색</button>
+    <button onclick="getStudentByDepartment()">학과로 검색</button>
+    <hr>
+    <h2>학생 관리</h2>
+    <button onclick="addStudent()">학생 추가</button>
+    <button onclick="updateStudent()">학생 수정</button>
+    <button onclick="deleteStudent()">학생 삭제</button>
+    <hr>
+    <h2>결과</h2>
+    <pre id="result">결과가 여기에 표시됩니다.</pre>
+    <script src="./js/students.js"></script>
+</body>
+</html>

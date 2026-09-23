@@ -24,4 +24,12 @@ public class Student { // 학생 1인의 정보 저장 데이터 구조
     public String getDepartment(){
         return department;
     }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setDepartment(String department){
+        this.department = department;
+    }
 }
