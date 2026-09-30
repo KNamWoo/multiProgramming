@@ -1,3 +1,45 @@
+window.onload = function(){
+    checkUser();
+};
+
+function checkUser(){
+    const isLogin = localStorage.getItem("isLogin");
+    const role = localStorage.getItem("role");
+    if(isLogin !== "true"){
+        location.href = "/login.html";
+        return;
+    }
+
+    const loginUser = document.getElementById("loginUser");
+    const adminMenu = document.getElementById("adminMenu");
+
+    if(role === "admin"){
+        if(loginUser !== null){
+            loginUser.textContent = "관리자";
+        }
+        if(adminMenu !== null){
+            adminMenu.style.display = "block";
+        }
+    }else if(role === "user"){
+        if(loginUser !== null){
+            loginUser.textContent = "일반 사용자";
+        }
+        if(adminMenu !== null){
+            adminMenu.style.display = "none";
+        }
+    }
+
+    if(adminMenu !== null){
+        console.log("adminMenu display =", adminMenu.style.display);
+    }
+}
+
+function logout(){
+    localStorage.removeItem("isLogin");
+    localStorage.removeItem("role");
+    location.href="/login.html";
+}
+
 function showResult(data){
     if(typeof data === "object"){
         document.getElementById("result").textContent =
@@ -21,7 +63,7 @@ function getStudentByID(){
         return;
     }
 
-    fetch('/students/search/' + id)
+    fetch('/students/search/' + encodeURIComponent(id))
         .then(response => response.text())
         .then(data => {
             try{

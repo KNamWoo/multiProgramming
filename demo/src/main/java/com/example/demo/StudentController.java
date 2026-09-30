@@ -65,10 +65,12 @@ public class StudentController { // 학생 관련 웹 요청 처리 클래스
     // "http://localhost:8080/students/search/1"의 형식
     // List 반환이 아니기 때문에 Object로 자료형을 지정
     public Object studentByID(@PathVariable int id){
-        if(id < 1 || id > getStudentList().size()){
-            return "해당 번호의 학생을 찾을 수 없습니다.";
+        for(Student student : studentList){
+            if(student.getID() == id){
+                return student;
+            }
         }
-        return getStudentList().get(id - 1);
+        return "해당 번호의 학생을 찾을 수 없습니다.";
     }
 
     @GetMapping("/students/search/{id}/name")
@@ -95,7 +97,8 @@ public class StudentController { // 학생 관련 웹 요청 처리 클래스
         return getStudentList().stream().filter(s->s.getDepartment().equals(department)).toList();
     }
 
-    @PutMapping("/students/search/{id}")
+    //수정하는 코드
+    @PutMapping("/students/{id}")
     public Object updateStudent(
             @PathVariable int id,
             @RequestParam String name,
