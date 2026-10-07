@@ -5,19 +5,28 @@
     <title>학생 관리 시스템</title>
     <link rel="stylesheet" href="./css/students.css">
 </head>
-<body>
-    <h1>학생 관리 시스템</h1>
-    <hr>
-    <div class="user-info">로그인 사용자 :
-        <span id="loginUser"></span>
-        <button onclick="logout()">로그아웃</button>
+<body id="mainBody">
+    <div class="header-area">
+        <img id="roleLogo" class="role-logo" alt="사용자 로고">
+        <div>
+            <h1 id="mainTitle"></h1>
+            <hr>
+            <div class="user-info">
+                로그인 사용자 :
+                <span id="loginUser"></span>
+                <span id="roleBadge"></span>
+                <button onclick="logout()">로그아웃</button>
+            </div>
+        </div>
     </div>
     <hr>
     <h2>학생 정보 입력</h2>
     <div class="input-box">
+        <div id="adminInputBox">
         학생번호 :
         <input type="number" id="id" placeholder="학생번호 입력">
         <br>
+        </div>
         이름 :
         <input type="text" id="name" placeholder="이름 입력">
         <br>
@@ -26,12 +35,17 @@
     </div>
     <hr>
     <h2>학생 조회</h2>
-    <button onclick="getAllStudents()">전체보기</button>
-    <button onclick="getStudentByID()">ID로 검색</button>
-    <button onclick="getStudentByName()">이름으로 검색</button>
-    <button onclick="getStudentByDepartment()">학과로 검색</button>
-    <hr>
+    <button onclick="getStudentGrade()">성적 조회</button>
+    <div id="adminSearchMenu">
+        <button onclick="getAllStudents()">전체보기</button>
+        <button onclick="getStudentByID()">ID로 검색</button>
+        <button onclick="getStudentByName()">이름으로 검색</button>
+        <button onclick="getStudentByDepartment()">학과로 검색</button>
+        <button onclick="getStudentCount()">전체 학생 수</button>
+        <button onclick="getDepartmentCount()">학과 학생 수</button>
+    </div>
     <div id="adminMenu">
+        <hr>
         <h2>학생 관리</h2>
         <button onclick="addStudent()">학생 추가</button>
         <button onclick="updateStudent()">학생 수정</button>
@@ -40,6 +54,7 @@
     </div>
     <h2>결과</h2>
     <pre id="result">결과가 여기에 표시됩니다.</pre>
+    <button onclick="saveResultFile()">결과 파일 저장</button>
     <script src="./js/students.js"></script>
 </body>
 </html>

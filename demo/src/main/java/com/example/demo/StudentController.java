@@ -144,4 +144,37 @@ public class StudentController { // 학생 관련 웹 요청 처리 클래스
 
         return "학생을 추가했습니다.";
     }
+
+    @GetMapping("/students/count")
+    public int getStudentCount(){
+        return studentList.size();
+    }
+
+    @GetMapping("/students/count/department")
+    public int getDepartmentCount(@RequestParam String department){
+        int count = 0;
+        for(Student student : studentList){
+            if(student.getDepartment().equals(department)){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    @GetMapping("/students/search/grade/{name}")
+    public Object getStudentGrade(
+            @RequestParam String name,
+            @RequestParam String department
+    ){
+        for(Student student: studentList){
+            boolean nameMatch = name.isEmpty() || student.getName().equals(name);
+            boolean departmentMatch = department.isEmpty() || student.getDepartment().equals(department);
+
+            if(nameMatch && departmentMatch){
+                return student;
+            }
+        }
+        return "해당 학생이 없습니다";
+    }
+    //'/students/search/grade/' + encodeURIComponent(name) + '?department=' + encodeURIComponent(department)
 }

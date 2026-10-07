@@ -30,3 +30,9 @@ button{
 #message{
     color: red;
 }
+
+.school-logo{
+    width: 280px;
+    height: auto;
+    margin-bottom: 15px;
+}
