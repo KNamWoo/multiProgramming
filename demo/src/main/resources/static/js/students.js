@@ -153,6 +153,7 @@ function getStudentByDepartment(){
 
 function addStudent(){
     const id = document.getElementById("id").value;
+    const studentNumber = document.getElementById("studentNumber").value;
     const name = document.getElementById("name").value;
     const department = document.getElementById("department").value;
 
@@ -161,7 +162,7 @@ function addStudent(){
         return;
     }
 
-    const url = '/students/new'+'?id='+id+'&name='+encodeURIComponent(name)+'&department='+encodeURIComponent(department);
+    const url = '/students/new'+'?id='+id+'&studentNumber='+encodeURIComponent(studentNumber)+'&name='+encodeURIComponent(name)+'&department='+encodeURIComponent(department);
 
     fetch(url, {
         method: 'POST'
@@ -179,15 +180,16 @@ function addStudent(){
 
 function updateStudent(){
     const id = document.getElementById("id").value;
+    const studentNumber = document.getElementById("studentNumber").value;
     const name = document.getElementById("name").value;
     const department = document.getElementById("department").value;
 
-    if(id === "" || name === "" || department === ""){
+    if(id === "" || studentNumber === "" || name === "" || department === ""){
         alert("학생번호, 이름, 학과를 모두 입력하세요.");
         return;
     }
 
-    const url = '/students/'+id+'?name='+encodeURIComponent(name)+'&department='+encodeURIComponent(department);
+    const url = '/students/'+id+'?studentNumber='+encodeURIComponent(studentNumber)+'&name='+encodeURIComponent(name)+'&department='+encodeURIComponent(department);
 
     fetch(url, {
         method: 'PUT'
@@ -233,7 +235,7 @@ function saveResultFile(){
     const minute = String(now.getMinutes()).padStart(2, "0");
     const second = String(now.getSeconds()).padStart(2, "0");
 
-    const fileName = "studentsInf_"+year+month+day+"_"+hour+minute+second+".json";
+    const fileName = "studentsINF_"+year+month+day+"_"+hour+minute+second+".json";
     const blob = new Blob([result], { type: "application/json;charset=utf-8" });
     const link = document.createElement("a");
     link.href=URL.createObjectURL(blob);
@@ -267,8 +269,9 @@ function getStudentCount(){
     fetch('/students/count')
         .then(response => response.text())
         .then(data => {
-            showResult("전체 학생 수 : "+data+"명");
-        });
+            showResult("전체 학생 수 : " + data + "명");
+        }
+    );
 }
 
 function getDepartmentCount(){
@@ -277,7 +280,7 @@ function getDepartmentCount(){
         alert("학과를 입력하세요.");
         return;
     }
-    fetch('/students/count?department?department='+encodeURIComponent(department))
+    fetch('/students/count/department?department='+encodeURIComponent(department))
         .then(response => response.text())
         .then(data => {
             showResult(department + " 학생 수 : " + data + "명");
