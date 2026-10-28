@@ -287,3 +287,36 @@ function getDepartmentCount(){
         }
     );
 }
+
+function downloadTemplate(){
+    location.href = "/students/template";
+}
+
+function uploadExcel(){
+    const fileInput = document.getElementById("uploadFile");
+    const file = fileInput.files[0];
+    if(!file){
+        alert("업로드 할 Excel 파일을 선택하세요.");
+        return;
+    }
+    if(!file.name.toLowerCase().endsWith(".xlsx")){
+        alert("xlsx 형식의 Excel 파일만 업로드 할 수 있습니다.");
+        return;
+    }
+    const formData = new FormData();
+    formData.append("file", file);
+
+    fetch("/students/upload", {method: 'POST', body: formData})
+        .then(response => response.text())
+        .then(data => {
+            showResult(data);
+            alert(data);
+            getAllStudents();
+            fileInput.value = "";
+        })
+        .catch(error =>{
+            showResult("Excel 업로드 중 오류가 발생했습니다.");
+            console.log(error);
+        }
+    );
+}

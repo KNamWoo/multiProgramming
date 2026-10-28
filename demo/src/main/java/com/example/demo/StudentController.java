@@ -1,6 +1,7 @@
 package com.example.demo;
 
 // 브라우저의 Get 방식 요청을 특정 메서드와 연결하기 위함
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,6 +19,16 @@ import java.util.List;
 //import java.util.ArrayList;
 // URL 주소에 포함된 값을 Java로 가져오는 기능
 
+// Excel 파일 업로드를 위해 사용
+import org.springframework.web.multipart.MultipartFile;
+// Excel 템플릿 다운로드를 위해 사용
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+
+import java.io.IOException;
+
 
 @RestController // 웹 요청을 처리하고 결과를 브라우저에 직접 반환하는 Controller
 public class StudentController { // 학생 관련 웹 요청 처리 클래스
@@ -31,56 +42,10 @@ public class StudentController { // 학생 관련 웹 요청 처리 클래스
         return studentExcelService.getAllStudents();
     }
 
-    /*
-    // 브라우저에서 '/student' 주소로 GET 요청이 들어오면 바로 student() 메서드 실행
-    @GetMapping("/student")
-    public Student student(){
-        // 새로운 Student 객체를 생성해서 반환
-        // Spring Boot는 이 Student 객체를 자동으로 JSON 형태로 변환하여 브라우저에 전달
-        return new Student(
-                1,"홍길동","멀티미디어학과"
-        );
-    }
-
-    private final List<Student> studentList = new ArrayList<>();
-
-    public StudentController(){
-        studentList.add(new Student(1,"홍길동", "멀티미디어학과"));
-        studentList.add(new Student(2,"김철수", "인공지능학과"));
-        studentList.add(new Student(3,"이영희", "소프트웨어학과"));
-    }
-    */
-
     @GetMapping("/students")
     public List<Student> students(){
         return getStudentList();
     }
-
-    /*
-    private List<Student> getStudentList(){
-        return studentList;
-    }
-
-    @GetMapping("/students/new")
-    // "http://localhost:8080/students/new?id=10&name=김청운&department=디자인학과"의 형식
-    // 기존 학생 목록에서 같은 id가 있는지 확인
-    public Object newStudent(
-            @RequestParam int id,
-            @RequestParam String name,
-            @RequestParam String department
-    ){
-        for(Student student : getStudentList()){
-            if(student.getID() == id){
-                return "이미 존재하는 학생번호입니다.";
-            }
-        }
-        Student newStudent = new Student(id, name, department);
-
-        studentList.add(newStudent);
-
-        return newStudent;
-    }
-    */
 
     @GetMapping("/students/search/{id}")
     // "http://localhost:8080/students/search/1"의 형식
@@ -95,16 +60,6 @@ public class StudentController { // 학생 관련 웹 요청 처리 클래스
         }
         return "해당 번호의 학생을 찾을 수 없습니다.";
     }
-
-    /*
-    @GetMapping("/students/search/{id}/name")
-    public Object studentName(@PathVariable int id){
-        if(id < 1 || id > getStudentList().size()){
-            return "해당 번호의 학생을 찾을 수 없습니다.";
-        }
-        return getStudentList().get(id - 1).getName();
-    }
-    */
 
     @GetMapping("/students/search/name")
     public Object searchByName(@RequestParam String name){
@@ -157,17 +112,6 @@ public class StudentController { // 학생 관련 웹 요청 처리 클래스
         }
 
         return updatedStudent;
-        /*
-        for(Student student : studentList){
-            if(student.getID() == id){
-                student.setName(name);
-                student.setDepartment(department);
-
-                return student;
-            }
-        }
-        return "해당 학생이 없습니다.";
-        */
     }
 
     @DeleteMapping("/students/{id}")
@@ -179,37 +123,7 @@ public class StudentController { // 학생 관련 웹 요청 처리 클래스
         }
 
         return "해당 학생이 없습니다.";
-        /*
-        for(Student student : studentList){
-            if(student.getID() == id){
-                studentList.remove(student);
-                return "학생이 삭제되었습니다.";
-            }
-        }
-        return "해당 학생이 없습니다";
-        */
     }
-
-    /*
-    @PostMapping("/students/new")
-    public Object postStudent(
-            // ?이후에 값을 쌍으로 id=10의 식으로 받으려면 RequestParam의 형식을 이용해야 함
-            @RequestParam int id,
-            @RequestParam String name,
-            @RequestParam String department
-    ){
-        for(Student student : studentList){
-            if(student.getID() == id){
-                return "이미 존재하는 학생번호입니다.";
-            }
-        }
-        Student newStudent = new Student(id, name, department);
-
-        studentList.add(newStudent);
-
-        return "학생을 추가했습니다.";
-    }
-    */
 
     @GetMapping("/students/count")
     public int getStudentCount(){
@@ -229,22 +143,26 @@ public class StudentController { // 학생 관련 웹 요청 처리 클래스
         return count;
     }
 
-    /*
-    @GetMapping("/students/search/grade/{name}")
-    public Object getStudentGrade(
-            @RequestParam String name,
-            @RequestParam String department
-    ){
-        for(Student student: studentList){
-            boolean nameMatch = name.isEmpty() || student.getName().equals(name);
-            boolean departmentMatch = department.isEmpty() || student.getDepartment().equals(department);
-
-            if(nameMatch && departmentMatch){
-                return student;
-            }
-        }
-        return "해당 학생이 없습니다";
-    }
-    */
     //'/students/search/grade/' + encodeURIComponent(name) + '?department=' + encodeURIComponent(department)
+
+    @GetMapping("/students/template")
+    public ResponseEntity<Resource>
+    downloadTemplate() throws IOException{
+        Resource resource = new ClassPathResource("static/files/dataUpload.xlsx");
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\"dataUpload.xlsx\"")
+                .contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
+    }
+
+    @PostMapping("/students/upload")
+    public String uploadExcel(@RequestParam("file") MultipartFile file){
+        if(file.isEmpty()){
+            return "업로드할 Excel 파일을 선택하세요.";
+        }
+        String fileName = file.getOriginalFilename();
+        if(fileName == null || !fileName.toLowerCase().endsWith(".xlsx")){
+            return "xlsx 형식의 Excel 파일만 업로드할 수 있습니다.";
+        }
+        // StudentExcelService에서 업로드된 Excel 내용을 읽어서 student.xlsx에 반영
+        return studentExcelService.uploadStudentData(file);
+    }
 }

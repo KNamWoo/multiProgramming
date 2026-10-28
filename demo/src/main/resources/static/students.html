@@ -55,6 +55,21 @@
         <button onclick="deleteStudent()">학생 삭제</button>
         <hr>
     </div>
+    <h2>Excel 일괄 데이터 관리</h2>
+    <button onclick="downloadTemplate()">업로드 템플릿 다운로드</button>
+    <br><br>
+    <input type="file" id="uploadFile" accept=".xlsx">
+    <button onclick="uploadExcel()">Excel 업로드</button>
+    <p>
+        사용방법
+        업로드 템플릿을 다운로드 한 후,
+        ADD 또는 UPDATE 정보를 작성하여
+        Excel 파일을 업로드하세요.
+    </p>
+    <p>
+        형식 :
+        처리구분 / 학번 / 이름 / 학과
+    </p>
     <h2>결과</h2>
     <pre id="result">결과가 여기에 표시됩니다.</pre>
     <button onclick="saveResultFile()">결과 파일 저장</button>
