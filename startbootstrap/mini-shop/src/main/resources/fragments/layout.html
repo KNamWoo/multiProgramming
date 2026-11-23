@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' | 미니샵'">미니샵</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<!-- 공통 Header -->
+<header th:fragment="header" class="header">
+    <div class="inner">
+        <a class="logo" th:href="@{/templates/products}">🛒 미니샵</a>
+        <!-- 메뉴 영역 -->
+        <nav>
+            <a th:href="@{/templates/products}">상품</a>
+            <a th:href="@{/admin/products}">관리자</a>
+        </nav>
+    </div>
+</header>
+<div th:fragment="alerts">
+    <div class="alert ok" th:if="${message}" th:text="${message}"></div>
+    <div class="alert error" th:if="${error}" th:text="${error}"></div>
+</div>
+</body>
+</html>

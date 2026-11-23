@@ -1,0 +1,17 @@
+insert into product (name, price, stock, description, image_url, created_at)
+values ('무선 블루투스 이어폰', 59000, 20,
+        '노이즈 캔슬링 지원, 최대 24시간 재생', NULL, CURRENT_TIMESTAMP),
+    ('기계식 키보드 (적측)', 89000, 10,
+        '87키 텐키리스, 한/영 각인', NULL, CURRENT_TIMESTAMP),
+    ('무선 마우스', 25000, 30,
+        '저소음 클릭, USB-C 충전', NULL, CURRENT_TIMESTAMP),
+    ('27인치 QHD 모니터', 289000, 5,
+        'IPS 패널, 165HZ', NULL, CURRENT_TIMESTAMP),
+    ('노트북 거치대', 32000, 15,
+        '알루미늄, 6단계 높이 조절', NULL, CURRENT_TIMESTAMP),
+    ('USB-C 멀티 허브', 45000, 3,
+        'HDMI / USB-A x3, SD 카드 슬롯 지원', NULL, CURRENT_TIMESTAMP),
+    ('스프링 부트 입문서', 32000, 50,
+        'Spring Boot 3 기반 웹 개발 입문', NULL, CURRENT_TIMESTAMP),
+    ('데스크 매트 (대형)', 18000, 0,
+        '900 x 400mm, 방수 코팅', NULL, CURRENT_TIMESTAMP);

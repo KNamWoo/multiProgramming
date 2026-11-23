@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${product.name})}"></head>
+
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+<main class="container">
+    <div th:replace="~{fragments/layout :: alerts}"></div>
+    <div class="detail">
+        <div class="thumbnail">
+            <img th:if="${product.imageUrl}" th:src="${product.imageUrl}" alt="상품 이미지">
+            <span th:unless="${product.imageUrl}">이미지 없음</span>
+        </div>
+        <div>
+            <h1 th:text="${product.name}">상품명</h1>
+            <p class="price" style="font-size:22px"
+               th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')} + '원'">0원</p>
+            <p th:text="${product.description}">상품 설명</p>
+            <p class="muted" th:text="'재고 : '+${product.stock} + '개'">재고 : 0개</p>
+            <p class="soldout" th:if="${product.stock == 0}">품절</p>
+            <div class="actions">
+                <a class="btn gray" th:href="@{/products}">목록으로</a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
