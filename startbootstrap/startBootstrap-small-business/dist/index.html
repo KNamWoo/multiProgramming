@@ -10,7 +10,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
 </head>
-<body id="top">
+<body id="top" data-page="HOME">
 
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
   <div class="container">
@@ -52,21 +52,30 @@
   </div>
 </nav>
 
-<section class="hero"><div class="container"><div class="row align-items-center g-5">
-  <div class="col-lg-7"><div class="eyebrow mb-3">PERSONAL WEBSITE</div><h1>안녕하세요.<br><span>김남우</span>입니다.</h1>
-    <p class="lead-copy mt-4">저의 프로필과 대학 생활, 그리고 개발 프로젝트를 소개하는 개인 홈페이지입니다. 새로운 기술과 경험을 통해 꾸준히 성장하고 있습니다.</p>
-    <div class="d-flex flex-wrap gap-3 mt-4"><a class="btn-main" href="portfolio.html">포트폴리오 보기 →</a><a class="btn-outline" href="profile.html">프로필 알아보기</a></div>
+<section class="hero" style="padding: 60px 0 52px;">
+  <div class="container">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-7">
+        <div class="eyebrow mb-2">PERSONAL WEBSITE</div>
+        <h1 style="font-size: clamp(2.2rem, 4.2vw, 3.4rem);">안녕하세요.<br><span>김남우</span>입니다.</h1>
+        <p class="lead-copy mt-3">저의 프로필과 대학 생활, 그리고 개발 프로젝트를 소개하는 개인 홈페이지입니다.</p>
+        <div class="d-flex flex-wrap gap-3 mt-4">
+          <a class="btn-main" href="portfolio.html">포트폴리오 보기 →</a>
+          <a class="btn-outline" href="profile.html">프로필 알아보기</a>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/EaGBXL2x6vo?si=ivv3aLxC18OAMPH3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </div>
   </div>
-  <div class="col-lg-5">
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/EaGBXL2x6vo?si=ivv3aLxC18OAMPH3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</section>
+
+<section class="section" style="padding: 56px 0 72px;">
+  <div class="container">
+    <div class="row g-4" id="cardList"></div>
   </div>
-  <div class="col-lg-5"><div class="panel soft-bg"><div class="icon-box mb-3">💻</div><h3>배우고, 만들고, 성장하기</h3><p class="mb-0">학습한 내용을 실제 결과물로 연결하는 것을 목표로 합니다. 이 사이트에서 프로필, 대학 정보, 프로젝트를 확인할 수 있습니다.</p></div></div>
-</div></div></section>
-<section class="section"><div class="container"><h2 class="section-title">사이트 바로가기</h2><p class="section-desc">원하는 항목을 선택해 자세한 내용을 확인하세요.</p><div class="row g-4">
-  <div class="col-md-4"><a class="text-decoration-none text-reset" href="profile.html"><div class="panel"><div class="icon-box">👤</div><h3>PROFILE</h3><p>개인 소개와 관심 분야, 보유 역량을 정리했습니다.</p><span class="text-primary fw-bold">프로필 보기 →</span></div></a></div>
-  <div class="col-md-4"><a class="text-decoration-none text-reset" href="universityInfo.html"><div class="panel"><div class="icon-box">🎓</div><h3>UNIVERSITY</h3><p>청운대학교와 대학 생활에 관한 정보를 소개합니다.</p><span class="text-primary fw-bold">대학 소개 보기 →</span></div></a></div>
-  <div class="col-md-4"><a class="text-decoration-none text-reset" href="portfolio.html"><div class="panel"><div class="icon-box">🧩</div><h3>PORTFOLIO</h3><p>개인 작업물과 개발 활동을 확인할 수 있습니다.</p><span class="text-primary fw-bold">포트폴리오 보기 →</span></div></a></div>
-</div></div></section>
+</section>
 
 <footer id="contact">
   <div class="container">
