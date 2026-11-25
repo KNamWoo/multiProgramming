@@ -1,5 +1,7 @@
 package com.example.minishop.controller;
+
 import com.example.minishop.service.ProductService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +35,8 @@ public class ProductController {
     // 4. 상품 목록 조회 및 검색
     @GetMapping("/products")
     public String list(
-            @RequestParam(required = false) String keyword, Model model) {
+            @RequestParam(required = false) String keyword, Model model
+    ) {
         model.addAttribute("products", productService.findAll(keyword));
         model.addAttribute("keyword", keyword);
         return "products/list";

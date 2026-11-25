@@ -1,4 +1,5 @@
 package com.example.minishop.domain;
+
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 

@@ -1,4 +1,5 @@
 package com.example.minishop.dao;
+
 import com.example.minishop.domain.Product;
 import jakarta.validation.constraints.*;
 /**
@@ -27,7 +28,7 @@ public class ProductForm {
     private Integer stock;
 
     // 4. 상품 설명
-    @Size(max = 1000, message = "상품 설명은 1000자 이하로 입력하세요.")
+    @Size(max = 1000, message = "상품 설명은 1,000자 이하로 입력하세요.")
     private String description;
 
     // 5. 상품 이미지

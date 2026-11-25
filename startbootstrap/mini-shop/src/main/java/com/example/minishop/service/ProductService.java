@@ -1,9 +1,12 @@
 package com.example.minishop.service;
+
 import com.example.minishop.domain.Product;
 import com.example.minishop.dao.ProductForm;
 import com.example.minishop.repository.ProductRepository;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 /**
  * ProductService
@@ -34,7 +37,7 @@ public class ProductService {
 
     public Product findById(Long id) {
         return productRepository.findById(id).orElseThrow(()
-                -> new IllegalArgumentException("상품을 찾을 수 없습니다. id=" + id)
+            -> new IllegalArgumentException("상품을 찾을 수 없습니다. id=" + id)
         );
     }
 
@@ -42,13 +45,12 @@ public class ProductService {
     @Transactional
     public Long create(ProductForm form) {
         Product product = new Product(
-                form.getName(),
-                form.getPrice(),
-                form.getStock(),
-                form.getDescription(),
-                form.getImageUrl()
+            form.getName(),
+            form.getPrice(),
+            form.getStock(),
+            form.getDescription(),
+            form.getImageUrl()
         );
-
         return productRepository.save(product).getId();
     }
 
@@ -57,11 +59,11 @@ public class ProductService {
     public void update(Long id, ProductForm form) {
         Product product = findById(id);
         product.UpdateProduct(
-                form.getName(),
-                form.getPrice(),
-                form.getStock(),
-                form.getDescription(),
-                form.getImageUrl()
+            form.getName(),
+            form.getPrice(),
+            form.getStock(),
+            form.getDescription(),
+            form.getImageUrl()
         );
     }
 
